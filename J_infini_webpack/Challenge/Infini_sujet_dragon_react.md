@@ -1,150 +1,184 @@
 
 # Infini sujet Dragons list
 
-Notez que webpack est en mode strict. Celui-ci vous apportera une meilleure granularité dans la remontée des erreurs.
+## CSS Responsive + inclusif 
 
-Récupérez les données de l'exercice ci-dessous :
+* Utiliser l'outil d'intégration de votre choix pour réaliser une première maquette. 
+Les couleurs et le design sont laissés à votre appréciation.
 
-```js
-const dragons = {
-    names: [
-        { id: 1, name: "Apalala" },
-        { id: 2, name: "Balaur" },
-        { id: 3, name: "Bolla" }
-    ],
-    count: 3,
-}
 
-export default dragons;
-```
+* Afficher la liste des Dragons sous forme de carte => 2 Dragons par ligne MAXIMUM.
 
-1. Affichez les dragons dans une liste **ul/li**. Importez les données dans le fichier app.js et créez une fonction addDragons que vous appelerez dans ce fichier. La fonction addEventListener permettra de charger les données une fois le DOM construit :
 
-```js
+* Utiliser des médias queries pour afficher 1 dragon par ligne sur mobile par exemple. 
+* Les Grids CSS sont autorisées.
+* Les Flexbox CSS sont autorisées.
+* Les frameworks CSS sont INTERDITS.
 
-document.addEventListener("DOMContentLoaded", (event) => {
-    // appel de votre fonction addDragons avec ses paramètres
-});
-```
+=> Nom + Type ( Badge de couleur ) + un bouton "afficher les relations" => Qui affiche des minicartes avec le nom des dragons liés.
 
-2. Affichez en premier leur nombre et modifiez la fonction addDragons.
 
-- Babel
+* Ajouter un systeme de filtre PAR TYPE, PAR NOM.
 
-Babel va nous permettre de traduire du code ES6 ou ES2020 en ES5 compatible avec la plupart des navigateurs.
+* Un formulaire d'ajout / Modification de dragon et de relation. ( pas de persistence de données )
 
-```bash
-npm install --save-dev babel-loader @babel/core @babel/preset-env 
-```
+=> Un formulaire en HTML avec des inputs et des boutons.
 
-Dans le fichier webpack.config.js vous devez définir le loader Babel. On utilise le presets @babel/preset-env.
 
-```js
-const path = require('path'); 
+* Ajouter un systeme de pagination ( 2 dragons par page )
 
-module.exports = {
-    // ...
-    ,
-   module: {
-      rules: [
-        {
-          test: /\.m?js$/,
-          exclude: /(node_modules|bower_components)/,
-          use: {
-            loader: "babel-loader",
-            options: {
-              presets: ["@babel/preset-env"],
-            },
-          },
-        },
-      ],
+
+## Utilisation d'API
+
+* Créer une API fictive avec JSON SERVER : 
+
+````nodejs
+npm install -g json-server
+````
+
+* Créer un fichier db.json avec la structure suivante : 
+
+````json
+{
+  "dragons": [
+    {
+      "id": 1,
+      "name": "Drogon",
+      "type": "Feu",
+      "relations": [2, 3, 4, 5, 6]
+    },
+    {
+      "id": 2,
+      "name": "Rhaegal",
+      "type": "Eau",
+      "relations": [1, 3, 7, 8, 9]
+    },
+    {
+      "id": 3,
+      "name": "Viserion",
+      "type": "Terre",
+      "relations": [1, 2, 10, 11, 12]
+    },
+    {
+      "id": 4,
+      "name": "Alexstrasza",
+      "type": "Feu",
+      "relations": [1, 5, 13, 14, 15]
+    },
+    {
+      "id": 5,
+      "name": "Deathwing",
+      "type": "Terre",
+      "relations": [4, 6, 16, 17, 18]
+    },
+    {
+      "id": 6,
+      "name": "Malygos",
+      "type": "Eau",
+      "relations": [1, 5, 19, 20, 21]
+    },
+    {
+      "id": 7,
+      "name": "Smaug",
+      "type": "Feu",
+      "relations": [2, 8, 22, 23, 24]
+    },
+    {
+      "id": 8,
+      "name": "Glaurung",
+      "type": "Eau",
+      "relations": [7, 9, 25, 26, 27]
+    },
+    {
+      "id": 9,
+      "name": "Ancalagon",
+      "type": "Terre",
+      "relations": [2, 8, 28, 29, 30]
+    },
+    {
+      "id": 10,
+      "name": "Gandarewa",
+      "type": "Air",
+      "relations": [45, 46, 47, 48, 49]
     }
-}
-```
-
-- polyfill pour les nouvelles fonctionnalités des nouvelles versions de JS
-
-Si vous utilisez les nouvelles features JS, vous devez installer des polyfill afin de les transcrire pour la plupart des navigateurs.
-
-```js
-npm install --save babel-polyfill
-```
-
-3. Configurez correctement le projet avec Webpack et Babel
-
-4. Ajoutez les polyfill au projet
-
-Ajoutez également dans votre fichier webpack.config.js, pour la clé **entry** la configuration suivante :
-
-```js
-const path = require('path'); 
-
-module.exports = {
-    // ...
-    entry: ['babel-plyfill', './src/app.js' ], // Point d'entrée
-   
-   // La suite de votre code ...
-}
-```
-
-5. Dans le dossier src ajoutez les nouveaux dragons et importez ces dragons dans le fichier app.js
-
-```js
-const dragons = {
-    names: [
-        { id: 1, name: "Apalala", element : 'fire' },
-        { id: 2, name: "Balaur", element : 'water' },
-        { id: 3, name: "Bolla" }
-    ],
-    count: 3,
+  ]
 }
 
-export default dragons;
-```
+````
 
-6. Affichez les dragons dans une liste ul/li et précisez à chaque fois s'il existe son élément (fire ou water). Utilisez la nouvelle syntaxe ES2020 suivante pour tester l'existence d'une propriété :
+* Lancer le serveur : 
 
-```js
+````nodejs
+json-server --watch db.json
+````
 
-myObject?.attribut
 
-```
+* Utiliser l'API pour récupérer les données et les afficher dans l'application.
+* Utiliser l'API pour ajouter des données et les afficher dans l'application.
+* Utiliser l'API pour modifier des données et les afficher dans l'application.
+* Utiliser l'API pour supprimer des données et les afficher dans l'application.
+* Utiliser l'API pour ajouter des relations entre les dragons et les afficher dans l'application.
+* Utiliser l'API pour supprimer des relations entre les dragons et les afficher dans l'application.
+* Utiliser l'API pour modifier des relations entre les dragons et les afficher dans l'application.
+* Utiliser l'API pour filtrer les dragons par type et les afficher dans l'application.
 
-- Que s'est-il passé dans le fichier bundle.js ? Il faut builder votre fichier et l'inspecter avec la console du navigateur.
 
-7. Créez le fichier relationships.js suivant. Sous chaque dragon affichez ses relations avec les autres dragons :
+## Utilisation de l'APi Json-server : exemples
 
-```js
-const relationships =  [
-    { id: 1, relations : [2, 3] },
-    { id: 2, relations : [1] },
-    { id: 3, relations : [2] }
-]
-```
-8. Un jury a attribué des valeurs sur la force de chaque dragon. Affichez la moyenne de ces notes sous chaque dragon.
+* Listes des routes : 
+* GET http://localhost:3000/dragons
+* GET http://localhost:3000/dragons/1
+* POST http://localhost:3000/dragons
 
-```js
-const forces =  [
-    { id: 1, notes : [12, 13, 19, 11] },
-    { id: 2, notes : [11, 15, 17, 9] },
-    { id: 3, notes : [20, 11, 12, 7] }
-]
-```
+BODY : 
+````json
+{
+  "name": "Drogon",
+  "type": "Feu",
+  "relations": [2, 3, 4, 5, 6]
+}
+````
 
-9. (**) créez un bouton order pour ordonner l'affichage des dragons par ordre croissant ou décroissant de force.
 
-## Wireframe
+* PUT http://localhost:3000/dragons/1
 
-```txt
----------------------------------------------
+BODY : 
+````json
+{
+  "name": "Drogon",
+  "type": "Feu",
+  "relations": [2, 3, 4, 5, 6]
+}
+````
 
-                    Dragons 
-[ order C/D ]
----------------------------------------------
-    Apalala, element : fire
-        force : ...
-    Balaur , element : water 
-        force : ...
-    Bolla 
-        force : ...
-```
+* DELETE http://localhost:3000/dragons/1
+* GET http://localhost:3000/dragons?name=drogon
+* GET http://localhost:3000/dragons?type=feu
+* GET http://localhost:3000/dragons?name=drogon&type=feu
+* GET http://localhost:3000/dragons?_page=1&_limit=2
+* GET http://localhost:3000/dragons?_page=1&_limit=2&_sort=name&_order=asc
+* GET http://localhost:3000/dragons?_page=1&_limit=2&_sort=name&_order=desc
+* GET http://localhost:3000/dragons?_page=1&_limit=2&_sort=name&_order=desc&type=feu
+* GET http://localhost:3000/dragons?_page=1&_limit=2&_sort=name&_order=desc&type=feu&name=drogon
+
+
+## Ajout d'utilisateurs
+
+Maintenant que votre application est fonctionnelle, vous devez la rendre compatible avec le RGPD.
+
+Il faut prévoir un formulaire d'inscription avec les champs suivants :
+
+* Nom
+* Prénom
+* Email
+* Mot de passe
+
+Il faut prévoir un formulaire de connexion avec les champs suivants :
+
+* Email
+* Mot de passe
+
+
+
+
+
