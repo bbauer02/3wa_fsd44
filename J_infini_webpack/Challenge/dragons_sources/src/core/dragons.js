@@ -6,7 +6,7 @@ const dragons = {
         { id: 4, name: "Drogon", elemnt : "fire" },
         { id: 5, name: "Katla" },
         { id: 6, name: "Saphira" },
-        { id: 7, name: "Thorn", elemnt : "water" }
+        { id: 7, name: "Thorn", elemnt : "water" },
         { id: 8, name: "Tiamat", elemnt : "water" },
         { id: 9, name: "Viserion", elemnt : "fire" },
         { id: 10, name: "Y Ddraig Goch", elemnt : "fire" },
